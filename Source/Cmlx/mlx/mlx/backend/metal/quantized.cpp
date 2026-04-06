@@ -692,7 +692,7 @@ void qmm(
     metal::Device& d,
     const Stream& s,
     const std::string& mode) {
-  if (metal::is_nax_available() && transpose && (K % 64 == 0) &&
+  if (metal::is_nax_available() && bits != 1 && transpose && (K % 64 == 0) &&
       (env::enable_tf32() || x.dtype() != float32)) {
     return qmm_nax(
         /* const array& x = */ x,
@@ -788,7 +788,7 @@ void gather_qmm(
     metal::Device& d,
     const Stream& s,
     const std::string& mode) {
-  if (metal::is_nax_available() && transpose && (K % 64 == 0) &&
+  if (metal::is_nax_available() && bits != 1 && transpose && (K % 64 == 0) &&
       (env::enable_tf32() || x.dtype() != float32)) {
     return gather_qmm_nax(
         /* const array& x = */ x,
@@ -1133,7 +1133,7 @@ void gather_qmm_rhs(
     metal::Device& d,
     const Stream& s,
     const std::string mode) {
-  if (metal::is_nax_available() && transpose &&
+  if (metal::is_nax_available() && bits != 1 && transpose &&
       (env::enable_tf32() || x_.dtype() != float32)) {
     return gather_qmm_rhs_nax(
         /* const array& x_ = */ x_,
