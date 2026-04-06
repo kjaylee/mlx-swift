@@ -359,6 +359,10 @@ void _qmm_dispatch_typed(
     int bits,
     bool transposed_w) {
   switch (bits) {
+    case 1:
+      _qmm_dispatch_group<T, 1>(
+          result, x, w, scales, biases, M, N, K, group_size, transposed_w);
+      break;
     case 2:
       _qmm_dispatch_group<T, 2>(
           result, x, w, scales, biases, M, N, K, group_size, transposed_w);
@@ -384,7 +388,7 @@ void _qmm_dispatch_typed(
           result, x, w, scales, biases, M, N, K, group_size, transposed_w);
       break;
     default:
-      throw std::invalid_argument("Quantization bits must be 2, 3, 4, 6 or 8.");
+      throw std::invalid_argument("Quantization bits must be 1, 2, 3, 4, 5, 6 or 8.");
   }
 }
 
